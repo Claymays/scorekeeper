@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -33,13 +34,8 @@ public class User {
     public User(String username, String password) {
         this.username = username;
         this.password = password;
-    }
-
-    @Override
-    public String toString() {
-        return String.format("Username: %s \n" +
-                "friends: %s \n" +
-                "Games: %s", username, friendList.toString(), games.toString());
+        this.friendList = new ArrayList<>();
+        this.games = new ArrayList<>();
     }
 }
 
