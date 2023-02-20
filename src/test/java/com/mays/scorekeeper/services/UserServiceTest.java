@@ -29,6 +29,9 @@ class UserServiceTest {
     @Test
     @DisplayName("Retrieve User Record")
     void get() {
+        int expectedId = userService.create("Clayton", "pass").get().getId();
+        int result = userService.get(expectedId).get().getId();
+        assertEquals(expectedId, result);
     }
 
     @Test
