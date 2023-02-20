@@ -37,10 +37,14 @@ class UserServiceTest {
     @Test
     @DisplayName("Delete User Record")
     void delete() {
+        User user = userService.create("Clayton", "pass").get();
+        userService.delete(user.getId());
+        assertFalse(userService.get(user.getId()).isPresent());
     }
 
     @Test
     @DisplayName("Update User Record")
     void update() {
+
     }
 }
