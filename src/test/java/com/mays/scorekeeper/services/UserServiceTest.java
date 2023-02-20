@@ -22,6 +22,9 @@ class UserServiceTest {
     @DisplayName("Create New User")
     void create() {
         Optional<User> created = userService.create("Clayton", "password");
+        Optional<User> duplicate = userService.create("Clayton", "password");
+
+        assertFalse(duplicate.isPresent());
         assertTrue(created.isPresent());
         assertEquals(created.get(), userService.get(created.get().getId()).get());
     }
