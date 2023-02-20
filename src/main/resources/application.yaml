@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: "jdbc:mysql://localhost:3306/scorekeeper"
+    username: "root"
+    password: "Cc854285"
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  flyway:
+    enabled: false
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    defer-datasource-initialization: true
