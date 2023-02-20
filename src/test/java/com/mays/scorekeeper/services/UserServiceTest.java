@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -17,6 +18,7 @@ class UserServiceTest {
     @Autowired private UserService userService;
 
     @Test
+    @Transactional
     @DisplayName("Create New User")
     void create() {
         Optional<User> created = userService.create("Clayton", "password");
