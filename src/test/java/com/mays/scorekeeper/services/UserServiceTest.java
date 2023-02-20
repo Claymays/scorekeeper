@@ -43,8 +43,19 @@ class UserServiceTest {
     }
 
     @Test
+    @Transactional
     @DisplayName("Update User Record")
     void update() {
+        User originalUser = userService.create("Clayton", "pass").get();
+        User altUser = userService.get(originalUser.getId()).get();
+        String newUsername = "not Clayton";
+        altUser.setUsername(newUsername);
 
+        userService.update(altUser);
+
+        User postUpdateUser = userService.get(originalUser.getId()).get();
+
+        assertEquals(newUsername, postUpdateUser.getUsername());
+        assertEquals(altUser, postUpdateUser);
     }
 }
