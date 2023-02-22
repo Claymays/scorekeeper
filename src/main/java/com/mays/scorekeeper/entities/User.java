@@ -7,6 +7,11 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A javabean for representing users of the application
+ *
+ * @author Clayton Mays
+ */
 @Entity
 @Data
 @NoArgsConstructor
@@ -31,6 +36,9 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
     private List<Game> games;
 
+    /**
+     * A partially qualified class constructor.
+     */
     public User(String username, String password) {
         this.username = username;
         this.password = password;

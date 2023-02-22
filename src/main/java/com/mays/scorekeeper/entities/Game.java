@@ -4,6 +4,11 @@ import lombok.*;
 
 import javax.persistence.*;
 
+/**
+ * A Javabean representing a game object, for tracking gamestate.
+ *
+ * @author Clayton Mays
+ */
 @Entity
 @Getter
 @Setter
@@ -20,4 +25,11 @@ public class Game {
 
     @Column(name = "note")
     private String notes;
+
+    @ManyToOne
+    private User owner;
+
+    public Game(String name) {
+        this.name = name;
+    }
 }
