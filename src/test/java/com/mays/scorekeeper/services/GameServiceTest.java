@@ -1,6 +1,7 @@
 package com.mays.scorekeeper.services;
 
 import com.mays.scorekeeper.entities.Game;
+import com.mays.scorekeeper.repositories.UserRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.Test;
@@ -15,6 +16,8 @@ class GameServiceTest {
 
     @Autowired
     GameService gameService;
+    @Autowired
+    private UserRepository userRepository;
 
     @Test
     @DisplayName("Can Create Game")
@@ -52,6 +55,8 @@ class GameServiceTest {
     @DisplayName("Can Delete Game Record")
     void delete() {
         Game game = gameService.create(new Game("test")).get();
+        gameService.delete(game.getId());
 
+        assertFalse(gameService.get(game.getId()).isPresent());
     }
 }
