@@ -1,6 +1,7 @@
 package com.mays.scorekeeper.services;
 
 import com.mays.scorekeeper.entities.Game;
+import com.mays.scorekeeper.entities.User;
 import com.mays.scorekeeper.repositories.UserRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -17,7 +18,7 @@ class GameServiceTest {
     @Autowired
     GameService gameService;
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Test
     @DisplayName("Can Create Game")
@@ -58,5 +59,16 @@ class GameServiceTest {
         gameService.delete(game.getId());
 
         assertFalse(gameService.get(game.getId()).isPresent());
+    }
+
+    @Test
+    @DisplayName("Can Create User Association")
+    void attachUser() {
+        Game game = gameService.create(new Game("test")).get();
+        User user = userService.create("Clayton", "password").get();
+        game.setOwner(user);
+
+        gameService.update(game);
+        assertEquals(game.getOwner().getUsername(), gameService.get(game.getId()).get().getOwner().getUsername());
     }
 }
