@@ -34,6 +34,8 @@ public class User {
     public User(String username, String password) {
         this.username = username;
         this.password = password;
+        this.games = new ArrayList<>();
+        this.friendList = new ArrayList<>();
     }
 }
 
