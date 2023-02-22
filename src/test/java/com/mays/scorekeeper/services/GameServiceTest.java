@@ -34,7 +34,17 @@ class GameServiceTest {
     @Test
     @DisplayName("Can Update Game Record")
     void update() {
-        Game game = gameService.create(new Game("test")).get();
+        Game original = gameService.create(new Game("test")).get();
+        Game updated = gameService.get(original.getId()).get();
+
+        String newName = "updated name";
+        updated.setName(newName);
+        gameService.update(updated);
+
+        Game postUpdate = gameService.get(original.getId()).get();
+
+        assertEquals(newName, postUpdate.getName());
+        assertEquals(updated, postUpdate);
     }
 
     @Test
