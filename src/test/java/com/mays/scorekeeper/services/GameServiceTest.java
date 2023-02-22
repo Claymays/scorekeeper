@@ -45,11 +45,13 @@ class GameServiceTest {
 
         assertEquals(newName, postUpdate.getName());
         assertEquals(updated, postUpdate);
+        assertNotEquals(original.getName(), postUpdate.getName());
     }
 
     @Test
     @DisplayName("Can Delete Game Record")
     void delete() {
         Game game = gameService.create(new Game("test")).get();
+
     }
 }
