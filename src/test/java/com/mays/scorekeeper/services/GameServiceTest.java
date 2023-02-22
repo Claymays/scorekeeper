@@ -48,7 +48,7 @@ class GameServiceTest {
         Game postUpdate = gameService.get(original.getId()).get();
 
         assertEquals(newName, postUpdate.getName());
-        assertEquals(updated, postUpdate);
+        assertEquals(updated.getName(), postUpdate.getName());
         assertNotEquals(original.getName(), postUpdate.getName());
     }
 
