@@ -1,5 +1,6 @@
 package com.mays.scorekeeper.services;
 
+import com.mays.scorekeeper.entities.Game;
 import com.mays.scorekeeper.entities.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class UserServiceTest {
 
     @Autowired private UserService userService;
+    @Autowired private GameService gameService;
 
     @Test
     @Transactional
@@ -60,5 +62,19 @@ class UserServiceTest {
 
         assertEquals(newUsername, postUpdateUser.getUsername());
         assertEquals(altUser, postUpdateUser);
+    }
+
+    @Test
+    @Transactional
+    @DisplayName("Create Game association")
+    void attachGame() {
+        User user = userService.create("Clayton", "Pass").get();
+        Game game = gameService.create(new Game("test game")).get();
+
+        user.getGames().add(game);
+        userService.update(user);
+
+        User updatedUser = userService.get(user.getId()).get();
+        assertEquals("test game", updatedUser.getGames().get(0).getName());
     }
 }
