@@ -7,3 +7,5 @@
 | 02/08/2023 | Created page designs, finished project plan                                                             | 4     |       |
 | 02/10/2023 | Created classes/services for project objects, created page controller, made initial entity associations | 4     |       |
 | 02/19/2023 | included spring-boot into project, debugged Junit and spring testing                                    | 3     |       |
+| 02/20/2023 | finished initial userService tests, achieving 100% code coverage                                        | 1     |       |
+| 02/21/2023 | finished initial testing for gameService. Added Javadoc to javabeans and GameService.                   | 2     |       |
