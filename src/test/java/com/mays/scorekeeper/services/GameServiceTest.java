@@ -2,9 +2,7 @@ package com.mays.scorekeeper.services;
 
 import com.mays.scorekeeper.entities.Game;
 import com.mays.scorekeeper.entities.User;
-import com.mays.scorekeeper.repositories.UserRepository;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
