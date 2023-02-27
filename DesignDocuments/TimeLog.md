@@ -9,3 +9,5 @@
 | 02/19/2023 | included spring-boot into project, debugged Junit and spring testing                                    | 3     |       |
 | 02/20/2023 | finished initial userService tests, achieving 100% code coverage                                        | 1     |       |
 | 02/21/2023 | finished initial testing for gameService. Added Javadoc to javabeans and GameService.                   | 2     |       |
+| 02/26/2023 | uploaded application to beanstalk instance                                                              | 3     |       |
+| 02/27/2023 | added demonstration of functioning beanstalk database, with 'seeded' data                               | 3     |       |
