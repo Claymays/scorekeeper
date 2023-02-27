@@ -26,6 +26,8 @@ My app will facilitate score keeping, with easy to define teams of multiple name
   * Intellij IDEA
 * Screen Design
   * Balsamiq
+* Templating
+  * Thymeleaf
 
 ### [User Stories](DesignDocuments/UserStories.md)
 
