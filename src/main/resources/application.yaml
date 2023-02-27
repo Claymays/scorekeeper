@@ -1,7 +1,9 @@
 spring:
   datasource:
-    url: "jdbc:mysql://localhost:3306/scorekeeper"
-    username: "root"
+#    url: "jdbc:mysql://localhost:3306/scorekeeper"
+#    username: "root"
+    url: "jdbc:mysql://awseb-e-pin3qirkwd-stack-awsebrdsdatabase-gbtif8ye7p3n.cufudecqblgj.us-east-2.rds.amazonaws.com:3306/scorekeeper"
+    username: "Clayton"
     password: "Cc854285"
     driver-class-name: com.mysql.cj.jdbc.Driver
   flyway:
