@@ -11,7 +11,7 @@
     <groupId>com.mays</groupId>
     <artifactId>scorekeeper</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
     <name>scorekeeper</name>
     <description>scorekeeper</description>
     <properties>
