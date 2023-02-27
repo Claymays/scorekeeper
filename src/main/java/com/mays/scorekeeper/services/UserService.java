@@ -1,11 +1,13 @@
 package com.mays.scorekeeper.services;
 
+import com.mays.scorekeeper.entities.Game;
 import com.mays.scorekeeper.entities.User;
 import com.mays.scorekeeper.repositories.UserRepository;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -15,6 +17,7 @@ import java.util.Optional;
 @Service
 public class UserService {
     private UserRepository userRepository;
+    private GameService gameService;
 
     /**
      * Instantiates a new User service.
@@ -22,8 +25,9 @@ public class UserService {
      * @param userRepository autowired UserRepository
      */
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, GameService gameService) {
         this.userRepository = userRepository;
+        this.gameService = gameService;
     }
 
     /**
@@ -66,5 +70,16 @@ public class UserService {
      */
     public void update(User user) {
         userRepository.save(user);
+    }
+
+    public List<User> getAllUsers() {
+        return (List<User>) userRepository.findAll();
+    }
+
+    public void seedUsers() {
+        userRepository.save(new User("Clayton", "pass"));
+        userRepository.save(new User("John", "pass"));
+        userRepository.save(new User("Chris", "pass"));
+        userRepository.save(new User("Amanda", "pass"));
     }
 }
