@@ -11,3 +11,4 @@
 | 02/21/2023 | finished initial testing for gameService. Added Javadoc to javabeans and GameService.                   | 2     |       |
 | 02/26/2023 | uploaded application to beanstalk instance                                                              | 3     |       |
 | 02/27/2023 | added demonstration of functioning beanstalk database, with 'seeded' data                               | 3     |       |
+| 03/01/2023 | added logging to userService, updated user story                                                        | 1     |       |
