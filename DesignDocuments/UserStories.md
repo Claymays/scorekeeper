@@ -36,3 +36,9 @@ As a user I want the game-state to be maintained, even if I close the browser.
 
 ### Password Reset
 As a user I want to be able to reset my password if I forget it.
+
+### Delete Game
+As a user I want to have the option to delete a game, for any reason
+
+### Delete Friend
+As a user I want to be able to remove friends from my account, in case we become estranged.
