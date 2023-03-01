@@ -3,6 +3,7 @@ package com.mays.scorekeeper.services;
 import com.mays.scorekeeper.entities.User;
 import com.mays.scorekeeper.repositories.UserRepository;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,7 @@ import java.util.Optional;
  */
 @Data
 @Service
+@Slf4j
 public class UserService {
     private UserRepository userRepository;
 
@@ -36,8 +38,10 @@ public class UserService {
      */
     public Optional<User> create(String username, String password) {
          if (userRepository.existsByUsername(username)) {
+             log.warn("Attempted to create a user record with username: " + username + " but name already exists");
              return Optional.empty();
          }
+         log.info("Creating user with name: " + username);
         return Optional.of(userRepository.save(new User(username, password)));
     }
 
@@ -48,7 +52,13 @@ public class UserService {
      * @return a user if found
      */
     public Optional<User> get(Integer id) {
-        return userRepository.findById(id);
+        Optional<User> user = userRepository.findById(id);
+        if (user.isEmpty()) {
+            log.warn("Attempted to retrieve user record with ID: " + id + " but no record found");
+        } else {
+            log.info("Retrieved user record " + user.get().getUsername());
+        }
+        return user;
     }
 
     /**
@@ -57,6 +67,7 @@ public class UserService {
      * @param id the id of the user to be deleted.
      */
     public void delete(Integer id) {
+        log.info("Deleting User record with id: " + id);
         userRepository.deleteById(id);
     }
 
@@ -66,11 +77,16 @@ public class UserService {
      * @param user a new User record to replace the old one
      */
     public void update(User user) {
+        log.info("Updating user record " + user.getUsername());
         userRepository.save(user);
     }
 
     public List<User> getAllUsers() {
-        return (List<User>) userRepository.findAll();
+        List<User> users = (List<User>) userRepository.findAll();
+        for (User user : users) {
+            log.info("Retrieved user record: " + user.getUsername());
+        }
+        return users;
     }
 
     public void seedUsers() {
