@@ -1,6 +1,5 @@
 package com.mays.scorekeeper.services;
 
-import com.mays.scorekeeper.entities.Game;
 import com.mays.scorekeeper.entities.User;
 import com.mays.scorekeeper.repositories.UserRepository;
 import lombok.Data;
@@ -17,7 +16,6 @@ import java.util.Optional;
 @Service
 public class UserService {
     private UserRepository userRepository;
-    private GameService gameService;
 
     /**
      * Instantiates a new User service.
@@ -25,9 +23,8 @@ public class UserService {
      * @param userRepository autowired UserRepository
      */
     @Autowired
-    public UserService(UserRepository userRepository, GameService gameService) {
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.gameService = gameService;
     }
 
     /**
