@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
+    <title>login</title>
+</head>
+<body>
+    <div class="container has-text-centered">
+        <div>
+            <h1 class="title">AWS Cognito Spring Security Demo</h1>
+            <div sec:authorize="isAuthenticated()">
+                <div class="box">
+                    Hello, <strong th:text="${#authentication.name}"></strong>!
+                </div>
+            </div>
+            <div sec:authorize="isAnonymous()">
+                <div class="box">
+                    <a class="button login is-primary"
+                       th:href="@{/oauth2/authorization/cognito}">Log in with AWS
+                        Cognito</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
