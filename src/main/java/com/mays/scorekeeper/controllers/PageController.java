@@ -25,4 +25,9 @@ public class PageController {
         model.addAttribute("users", userService.getAllUsers());
         return "users";
     }
+
+    @GetMapping("login")
+    public String getLogin() {
+        return "login";
+    }
 }
