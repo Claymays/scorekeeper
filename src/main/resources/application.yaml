@@ -7,8 +7,23 @@ spring:
     password: "Cc854285"
     driver-class-name: com.mysql.cj.jdbc.Driver
   flyway:
-    enabled: false
+    enabled: true
   jpa:
     hibernate:
-      ddl-auto: create-drop
-    defer-datasource-initialization: true
+      ddl-auto: none
+    defer-datasource-initialization: false
+  security:
+    oauth2:
+      client:
+        registration:
+          cognito:
+            clientId: 387sg9dr1q87ohenov3g8hhjck
+            clientSecret: 33ep6lk3dbdamanurk3bpnmpekdqcnola83b3q1ll4vbin7q3e
+            scope: openid
+            redirect-uri: https://localhost:8080/login
+            clientName: scorekeeper
+        provider:
+          cognito:
+            issuerUri: https://scorekeeper.auth.us-east-2.amazonaws.com
+#            issuerUri: https://scorekeeper.auth.us-east-2.amazonaws.com/us-east-2_TI82QP8W4
+            user-name-attribute: cognito:username
