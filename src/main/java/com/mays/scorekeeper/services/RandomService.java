@@ -15,6 +15,11 @@ import java.util.Map;
 
 import static org.springframework.web.reactive.function.BodyInserters.fromValue;
 
+/**
+ * A service class for consuming requests to random.org.
+ *
+ * @author Clayton Mays
+ */
 @Data
 @Service
 @Slf4j
@@ -24,6 +29,9 @@ public class RandomService {
     private final String url;
     private final String key;
 
+    /**
+     * A class constructor, that instantiates each class variable
+     */
     public RandomService() {
         this.webClient = WebClient.builder().build();
         this.mapper = new ObjectMapper();
@@ -31,6 +39,10 @@ public class RandomService {
         this.key = "3e63b8c8-8431-4b40-92c7-3c7b1c7fc52a";
     }
 
+    /**
+     * A method for generating coin flips, from random.org.
+     * @return A RandomResponse object containing either heads or tails
+     */
     public RandomResponse flipCoin() {
         Map<String, String> params = new HashMap<>();
         params.put("apiKey", key);
@@ -54,6 +66,11 @@ public class RandomService {
                 .block();
     }
 
+    /**
+     * A method for rolling a variable number of six-sided die.
+     * @param rolls the number of rolls needed.
+     * @return A RandomResponse object containing the results of the rolls.
+     */
     public RandomResponse rollDSix(String rolls) {
         Map<String, String> params = new HashMap<>();
         params.put("apiKey", key);
