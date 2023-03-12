@@ -53,4 +53,27 @@ public class RandomService {
                 .retrieve().bodyToMono(RandomResponse.class)
                 .block();
     }
+
+    public RandomResponse rollDSix(String rolls) {
+        Map<String, String> params = new HashMap<>();
+        params.put("apiKey", key);
+        params.put("n", rolls);
+        params.put("min", "1");
+        params.put("max", "6");
+        String json = "";
+        RandomRequest request = new RandomRequest("generateIntegers", params);
+        try {
+            json = mapper.writeValueAsString(request);
+        } catch (JsonProcessingException error) {
+            log.error(error.getMessage());
+        }
+
+        return webClient.post()
+                .uri(url)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(fromValue(json))
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve().bodyToMono(RandomResponse.class)
+                .block();
+    }
 }
