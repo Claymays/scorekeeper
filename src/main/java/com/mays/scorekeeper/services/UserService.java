@@ -81,18 +81,15 @@ public class UserService {
         userRepository.save(user);
     }
 
+    /**
+     * A method for retrieving all User records.
+     * @return each user record
+     */
     public List<User> getAllUsers() {
         List<User> users = (List<User>) userRepository.findAll();
         for (User user : users) {
             log.info("Retrieved user record: " + user.getUsername());
         }
         return users;
-    }
-
-    public void seedUsers() {
-        userRepository.save(new User("Clayton", "pass"));
-        userRepository.save(new User("John", "pass"));
-        userRepository.save(new User("Chris", "pass"));
-        userRepository.save(new User("Amanda", "pass"));
     }
 }

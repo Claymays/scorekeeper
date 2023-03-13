@@ -21,7 +21,6 @@ public class PageController {
 
     @GetMapping("users")
     public String getAll(Model model) {
-        userService.seedUsers();
         model.addAttribute("users", userService.getAllUsers());
         return "users";
     }
