@@ -3,6 +3,7 @@ package com.mays.scorekeeper.entities;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Set;
 
 /**
  * A Javabean representing a game object, for tracking gamestate.
@@ -28,6 +29,12 @@ public class Game {
 
     @ManyToOne
     private User owner;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(name="game_team",
+            joinColumns = @JoinColumn(name = "game_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "team_id", referencedColumnName = "id"))
+    private Set<Team> teams;
 
     public Game(String name) {
         this.name = name;
