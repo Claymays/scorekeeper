@@ -45,6 +45,45 @@ create table scorekeeper.friend_games
         foreign key (game_id) references scorekeeper.game (id)
 );
 
+create table scorekeeper.team
+(
+    id        int          not null
+        primary key,
+    team_name varchar(255) null,
+    game_id   int          null,
+    constraint FKrak251g2iec8hmjblec8lmyia
+        foreign key (game_id) references scorekeeper.game (id)
+);
+
+create table scorekeeper.game_team
+(
+    game_id int not null,
+    team_id int not null,
+    primary key (game_id, team_id),
+    constraint UK_bsi37ux6fdwcoytwklbeltqlp
+        unique (team_id),
+    constraint FK6c6nwk1e2dwdkcmxnfcrinjeu
+        foreign key (team_id) references scorekeeper.team (id),
+    constraint FKm0663x03esu3y8wt5qyiqabiq
+        foreign key (game_id) references scorekeeper.game (id)
+);
+
+create table scorekeeper.team_members
+(
+    team_id int          not null,
+    members varchar(255) null,
+    constraint FKb3toat7ors5scfmd3n69dhmr1
+        foreign key (team_id) references scorekeeper.team (id)
+);
+
+create table scorekeeper.team_scores
+(
+    team_id int    not null,
+    scores  double null,
+    constraint FKgmn2lngrbk1anu2ldj9j4he9h
+        foreign key (team_id) references scorekeeper.team (id)
+);
+
 create table scorekeeper.user_friend
 (
     friend_id int not null,
