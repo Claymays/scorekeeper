@@ -13,7 +13,8 @@ import java.util.List;
  * @author Clayton Mays
  */
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "user")
