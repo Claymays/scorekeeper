@@ -19,10 +19,14 @@ public class PageController {
     UserService userService;
 
     @GetMapping()
-    public String hello() {
+    public String home() {
         return "home";
     }
 
+    @GetMapping("login")
+    public String login() {
+        return "login";
+    }
     @GetMapping("newGame")
     public String newGame(Model model) {
         return "gameSetup";
