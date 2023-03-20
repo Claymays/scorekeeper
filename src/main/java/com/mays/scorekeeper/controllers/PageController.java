@@ -1,5 +1,9 @@
 package com.mays.scorekeeper.controllers;
 
+import com.mays.scorekeeper.entities.Friend;
+import com.mays.scorekeeper.entities.Game;
+import com.mays.scorekeeper.entities.User;
+import com.mays.scorekeeper.services.GameService;
 import com.mays.scorekeeper.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,7 +20,12 @@ public class PageController {
 
     @GetMapping()
     public String hello() {
-        return "hello";
+        return "home";
+    }
+
+    @GetMapping("newGame")
+    public String newGame(Model model) {
+        return "gameSetup";
     }
 
     @GetMapping("users")
