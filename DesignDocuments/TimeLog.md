@@ -12,3 +12,4 @@
 | 02/26/2023 | uploaded application to beanstalk instance                                                              | 3     |       |
 | 02/27/2023 | added demonstration of functioning beanstalk database, with 'seeded' data                               | 3     |       |
 | 03/01/2023 | added logging to userService, updated user story                                                        | 1     |       |
+| 03/19/2023 | added Teams object, created page for new game setup                                                     | 5     |       |
