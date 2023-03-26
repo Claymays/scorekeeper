@@ -1,5 +1,6 @@
 package com.mays.scorekeeper.security;
 
+import com.mays.scorekeeper.security.jwt.JwtRequestFilter;
 import com.mays.scorekeeper.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +18,14 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private final UserService userService;
+    private final JwtRequestFilter jwtRequestFilter;
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -48,7 +51,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/js/**",
                         "/login",
                         "/api/user/login",
-                        "/api/user/create"
+                        "/api/user/"
                 )
                 .and()
                 .ignoring()
@@ -77,6 +80,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     response.setStatus(HttpStatus.UNAUTHORIZED.value());
                     response.setContentType(MediaType.APPLICATION_JSON_VALUE);
                     response.getWriter().write("Error");
-                });
+                })
+                .and()
+                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 }
