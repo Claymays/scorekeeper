@@ -42,7 +42,7 @@ public class UserService implements UserDetailsService {
      * @return the created User object, or blank if unsuccessful
      */
     public Optional<User> create(String username, String password) {
-         if (userRepository.existsByUsername(username)) {
+         if (existsByUsername(username)) {
              log.warn("Attempted to create a user record with username: "
                      + username + " but name already exists");
              return Optional.empty();
@@ -109,6 +109,15 @@ public class UserService implements UserDetailsService {
             log.info("Retrieved user record: " + user.getUsername());
         }
         return users;
+    }
+
+    /**
+     * A method for checking availability of a username.
+     * @param username the new username to check against.
+     * @return false if the username does not exist in the database.
+     */
+    public boolean existsByUsername(String username) {
+        return userRepository.existsByUsername(username);
     }
 
     @Override
