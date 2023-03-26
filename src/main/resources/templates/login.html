@@ -2,13 +2,12 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <script>
-    function userAuth() {
+    function userAuth(action) {
       let params = {
         username: document.getElementById('login-username').value,
         password: document.getElementById('login-password').value
       }
-
-      fetch('api/user/login', {
+      fetch(`api/user/${action}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -20,9 +19,18 @@
           })
           .then(token => {
             localStorage.setItem("token", token);
-            location.href = '/home';
+            fetch('/home', {
+              method: 'GET',
+              headers: {
+                'Authorization': 'Bearer ' + token
+            }
+          })
+                .then(() => {
+
+                })
           })
           .catch(error => {
+            console.log(error);
             alert('Error logging in. Please try again');
           })
     }
@@ -32,6 +40,7 @@
 <body>
   <input value="" id="login-username" name="username" placeholder="Username">
   <input value="" id="login-password" name="password" placeholder="Password">
-  <button type="button" onclick="userAuth()">Submit</button>
+  <button type="button" onclick="userAuth('')">Sign Up</button>
+  <button type="button" onclick="userAuth('login')">Log In</button>
 </body>
 </html>
