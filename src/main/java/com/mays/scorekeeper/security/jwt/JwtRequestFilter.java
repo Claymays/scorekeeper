@@ -38,7 +38,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             String token = null;
             String username = null;
 
-            var bearer = "bearer";
+            var bearer = "Bearer";
             if (requestTokenHeader.startsWith(bearer)) {
                 token = requestTokenHeader.substring(bearer.length());
                 try {
