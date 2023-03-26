@@ -1,8 +1,6 @@
 package com.mays.scorekeeper.security.jwt;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,15 +13,13 @@ import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.UUID;
 
-import static java.security.KeyRep.Type.SECRET;
-
 @Component
 @Slf4j
 public class JwtUtil {
 
     private final static long JWT_LIFETIME_HOURS = 24;
 
-    private Key key;
+    private final Key key;
 
     JwtUtil() {
         this.key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
@@ -69,17 +65,13 @@ public class JwtUtil {
     }
 
     private Claims getAllClaimsFromToken(String token) {
-        Claims claims;
+        var parser = Jwts.parserBuilder().setSigningKey(key).build();
         try {
-            claims = Jwts.parser()
-                    .setSigningKey(String.valueOf(SECRET))
-                    .parseClaimsJws(token)
-                    .getBody();
-        } catch (Exception e) {
-            log.error("Could not get all claims Token from passed token");
-            claims = null;
+            var claims = parser.parseClaimsJws(token);
+            return claims.getBody();
+        } catch (ExpiredJwtException | UnsupportedJwtException | MalformedJwtException | IllegalArgumentException e) {
+            throw new JwtException("Cannot extract claims from token", e);
         }
-        return claims;
     }
 
     private boolean isNotExpired(String token) {
