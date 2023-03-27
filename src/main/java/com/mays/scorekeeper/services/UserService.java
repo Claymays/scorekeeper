@@ -5,8 +5,13 @@ import com.mays.scorekeeper.repositories.UserRepository;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,7 +21,7 @@ import java.util.Optional;
 @Data
 @Service
 @Slf4j
-public class UserService {
+public class UserService implements UserDetailsService {
     private UserRepository userRepository;
 
     /**
@@ -37,8 +42,9 @@ public class UserService {
      * @return the created User object, or blank if unsuccessful
      */
     public Optional<User> create(String username, String password) {
-         if (userRepository.existsByUsername(username)) {
-             log.warn("Attempted to create a user record with username: " + username + " but name already exists");
+         if (existsByUsername(username)) {
+             log.warn("Attempted to create a user record with username: "
+                     + username + " but name already exists");
              return Optional.empty();
          }
          log.info("Creating user with name: " + username);
@@ -54,9 +60,21 @@ public class UserService {
     public Optional<User> get(Integer id) {
         Optional<User> user = userRepository.findById(id);
         if (user.isEmpty()) {
-            log.warn("Attempted to retrieve user record with ID: " + id + " but no record found");
+            log.warn("Attempted to retrieve user record with ID: " +
+                    id + " but no record found");
         } else {
             log.info("Retrieved user record " + user.get().getUsername());
+        }
+        return user;
+    }
+
+    public Optional<User> getByUsername(String username) {
+        Optional<User> user = userRepository.findOneByUsername(username);
+        if (user.isEmpty()) {
+            log.warn("Attempted to retrieve user record with username: "
+                    + username + " but no record found");
+        } else {
+            log.info("Retrieved user record " + username);
         }
         return user;
     }
@@ -91,5 +109,28 @@ public class UserService {
             log.info("Retrieved user record: " + user.getUsername());
         }
         return users;
+    }
+
+    /**
+     * A method for checking availability of a username.
+     * @param username the new username to check against.
+     * @return false if the username does not exist in the database.
+     */
+    public boolean existsByUsername(String username) {
+        return userRepository.existsByUsername(username);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) {
+        Optional<User> user = userRepository.findOneByUsername(username);
+
+        if (user.isEmpty()) {
+            log.warn("User with name:" + username + "not found");
+        }
+
+        String password = user.get().getPassword();
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority("USER"));
+        return new org.springframework.security.core.userdetails.User(username, password, authorities);
     }
 }

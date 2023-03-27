@@ -18,7 +18,7 @@ public class PageController {
     @Autowired
     UserService userService;
 
-    @GetMapping()
+    @GetMapping("home")
     public String home() {
         return "home";
     }
