@@ -30,7 +30,8 @@ public class Friend {
     @ManyToMany
     @JoinTable(name="friend_games",
     joinColumns = @JoinColumn(name = "friend_id", referencedColumnName = "id"),
-    inverseJoinColumns = @JoinColumn(name = "game_id", referencedColumnName = "id"))
+    inverseJoinColumns = @JoinColumn(name = "game_id",
+            referencedColumnName = "id"))
     private List<Game> games;
 
     @Column(name = "wins")

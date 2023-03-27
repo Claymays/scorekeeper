@@ -9,6 +9,8 @@ import java.util.List;
 
 /**
  * An entity class representing a team contained in a given game.
+ *
+ * @author Clayton Mays
  */
 @Entity
 @Getter

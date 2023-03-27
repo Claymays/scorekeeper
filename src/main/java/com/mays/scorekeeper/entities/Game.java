@@ -32,8 +32,10 @@ public class Game {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(name="game_team",
-            joinColumns = @JoinColumn(name = "game_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "team_id", referencedColumnName = "id"))
+            joinColumns = @JoinColumn(name = "game_id",
+                    referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "team_id",
+                    referencedColumnName = "id"))
     private Set<Team> teams;
 
     public Game(String name) {
