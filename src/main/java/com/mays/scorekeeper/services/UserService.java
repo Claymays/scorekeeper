@@ -68,6 +68,11 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
+    /**
+     * Retrieve a User record by username property
+     * @param username the username to query for
+     * @return User record if found, empty Optional object if not
+     */
     public Optional<User> getByUsername(String username) {
         Optional<User> user = userRepository.findOneByUsername(username);
         if (user.isEmpty()) {
@@ -131,6 +136,7 @@ public class UserService implements UserDetailsService {
         String password = user.get().getPassword();
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("USER"));
-        return new org.springframework.security.core.userdetails.User(username, password, authorities);
+        return new org.springframework.security.core.
+                userdetails.User(username, password, authorities);
     }
 }
