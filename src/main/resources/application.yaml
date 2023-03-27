@@ -1,4 +1,6 @@
 spring:
+  profiles:
+    include: secrets
   datasource:
 #    url: "jdbc:mysql://localhost:3306/scorekeeper"
 #    username: "root"
@@ -10,5 +12,10 @@ spring:
     enabled: true
   jpa:
     hibernate:
-      ddl-auto: none
-    defer-datasource-initialization: false
+      ddl-auto: create-drop
+    defer-datasource-initialization: true
+
+application:
+  random:
+    url: https://api.random.org/json-rpc/4/invoke
+    key: ${secret.random.key}

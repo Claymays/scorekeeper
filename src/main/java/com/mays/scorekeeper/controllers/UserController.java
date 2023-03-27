@@ -24,8 +24,7 @@ public class UserController {
     private final Gson gson = new Gson();
 
     @Autowired
-    public UserController(UserService userService,
-                  PasswordEncoder passwordEncoder, JwtUtil jwtUtil) {
+    public UserController(UserService userService, PasswordEncoder passwordEncoder, JwtUtil jwtUtil) {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
         this.jwtUtil = jwtUtil;
@@ -37,9 +36,8 @@ public class UserController {
         String password;
     }
 
-    @GetMapping()
-    public ResponseEntity getUser(
-            @RequestParam(name="id", required = false) Integer id) {
+    @GetMapping(value = {"/", "/{id}"})
+    public ResponseEntity getUser(@PathVariable(name="id", required = false) Integer id) {
         if (id != null) {
             return ResponseEntity.ok(userService.get(id));
         }
@@ -47,17 +45,13 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public  ResponseEntity<String> getByUsername(
-            @RequestBody UserRequestBody authUser) {
+    public  ResponseEntity<String> getByUsername(@RequestBody UserRequestBody authUser) {
         Optional<User> optUser = userService.getByUsername(authUser.username);
         if (optUser.isPresent()) {
             User user = optUser.get();
-            if (passwordEncoder
-                    .matches(authUser.password, user.getPassword())) {
-                var details = userService
-                        .loadUserByUsername(authUser.username);
-                return ResponseEntity.ok(gson
-                        .toJson(jwtUtil.generateToken(details)));
+            if (passwordEncoder.matches(authUser.password, user.getPassword())) {
+                var details = userService.loadUserByUsername(authUser.username);
+                return ResponseEntity.ok(gson.toJson(jwtUtil.generateToken(details)));
             } else {
                 return ResponseEntity.badRequest().build();
             }
@@ -73,14 +67,11 @@ public class UserController {
         }
 
         String encryptedPassword = passwordEncoder.encode(newUser.password);
-        Optional<User> user = userService
-                .create(newUser.username, encryptedPassword);
+        Optional<User> user = userService.create(newUser.username, encryptedPassword);
 
         if (user.isPresent()) {
-            UserDetails userDetails = userService
-                    .loadUserByUsername(newUser.username);
-            return ResponseEntity.ok(gson
-                    .toJson(jwtUtil.generateToken(userDetails)));
+            UserDetails userDetails = userService.loadUserByUsername(newUser.username);
+            return ResponseEntity.ok(gson.toJson(jwtUtil.generateToken(userDetails)));
         } else {
             return ResponseEntity.internalServerError().build();
         }
