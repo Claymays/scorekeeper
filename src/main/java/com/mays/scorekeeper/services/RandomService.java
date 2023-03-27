@@ -2,10 +2,12 @@ package com.mays.scorekeeper.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mays.scorekeeper.entities.RandomConfig;
 import com.mays.scorekeeper.entities.RandomRequest;
 import com.mays.scorekeeper.entities.RandomResponse;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -26,17 +28,16 @@ import static org.springframework.web.reactive.function.BodyInserters.fromValue;
 public class RandomService {
     private final WebClient webClient;
     private final ObjectMapper mapper;
-    private final String url;
-    private final String key;
+    private RandomConfig config;
 
     /**
      * A class constructor, that instantiates each class variable
      */
-    public RandomService() {
+    @Autowired
+    public RandomService(RandomConfig config) {
         this.webClient = WebClient.builder().build();
         this.mapper = new ObjectMapper();
-        this.url = "https://api.random.org/json-rpc/4/invoke";
-        this.key = "3e63b8c8-8431-4b40-92c7-3c7b1c7fc52a";
+        this.config = config;
     }
 
     /**
@@ -45,7 +46,7 @@ public class RandomService {
      */
     public RandomResponse flipCoin() {
         Map<String, String> params = new HashMap<>();
-        params.put("apiKey", key);
+        params.put("apiKey", config.getKey());
         params.put("n", "1");
         params.put("min", "1");
         params.put("max", "2");
@@ -58,7 +59,7 @@ public class RandomService {
         }
 
         return webClient.post()
-                .uri(url)
+                .uri(config.getUrl())
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(fromValue(json))
                 .accept(MediaType.APPLICATION_JSON)
@@ -73,7 +74,9 @@ public class RandomService {
      */
     public RandomResponse rollDSix(String rolls) {
         Map<String, String> params = new HashMap<>();
-        params.put("apiKey", key);
+        log.info(config.getKey());
+        log.info(config.getUrl());
+        params.put("apiKey", config.getKey());
         params.put("n", rolls);
         params.put("min", "1");
         params.put("max", "6");
@@ -86,7 +89,7 @@ public class RandomService {
         }
 
         return webClient.post()
-                .uri(url)
+                .uri(config.getUrl())
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(fromValue(json))
                 .accept(MediaType.APPLICATION_JSON)

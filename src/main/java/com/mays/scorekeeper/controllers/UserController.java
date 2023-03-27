@@ -36,8 +36,8 @@ public class UserController {
         String password;
     }
 
-    @GetMapping()
-    public ResponseEntity getUser(@RequestParam(name="id", required = false) Integer id) {
+    @GetMapping(value = {"/", "/{id}"})
+    public ResponseEntity getUser(@PathVariable(name="id", required = false) Integer id) {
         if (id != null) {
             return ResponseEntity.ok(userService.get(id));
         }
