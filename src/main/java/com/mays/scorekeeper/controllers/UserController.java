@@ -55,9 +55,8 @@ public class UserController {
             } else {
                 return ResponseEntity.badRequest().build();
             }
-        } else {
-            return ResponseEntity.notFound().build();
         }
+        return ResponseEntity.notFound().build();
     }
 
     @PostMapping
