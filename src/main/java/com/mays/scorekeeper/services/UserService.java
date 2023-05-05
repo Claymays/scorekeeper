@@ -3,36 +3,23 @@ package com.mays.scorekeeper.services;
 import com.mays.scorekeeper.entities.User;
 import com.mays.scorekeeper.repositories.UserRepository;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * A business logic service class for User objects.
  */
-@Data
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class UserService implements UserDetailsService {
-    private UserRepository userRepository;
-
-    /**
-     * Instantiates a new User service.
-     *
-     * @param userRepository autowired UserRepository
-     */
-    @Autowired
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    private final UserRepository userRepository;
 
     /**
      * Creates a new User record if it does not exist.
@@ -42,12 +29,12 @@ public class UserService implements UserDetailsService {
      * @return the created User object, or blank if unsuccessful
      */
     public Optional<User> create(String username, String password) {
-         if (existsByUsername(username)) {
+        if (existsByUsername(username)) {
              log.warn("Attempted to create a user record with username: "
                      + username + " but name already exists");
              return Optional.empty();
-         }
-         log.info("Creating user with name: " + username);
+        }
+        log.info("Creating user with name: " + username);
         return Optional.of(userRepository.save(new User(username, password)));
     }
 
