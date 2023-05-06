@@ -14,3 +14,4 @@
 | 03/01/2023 | added logging to userService, updated user story                                                        | 1     |                                                                                    |
 | 03/19/2023 | added Teams object, created page for new game setup                                                     | 5     |                                                                                    |
 | 03/26/2023 | finished JWT authorization branch.                                                                      | 8     | There were a few hours sprinkled thoughout the week, but I forgot to track my time |
+| 05/05/2023 | questioned authentication implementation, all my life decisions.                                        | 6     |                                                                                    |
