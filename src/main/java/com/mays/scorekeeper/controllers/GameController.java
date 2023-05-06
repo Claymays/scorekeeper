@@ -36,4 +36,14 @@ public class GameController {
         }
         return ResponseEntity.ok(createdGame.get());
     }
+
+    @GetMapping("{id}")
+    public ResponseEntity<Game> getGame(@PathVariable Integer id) {
+        Optional<Game> game = gameService.get(id);
+        if (game.isEmpty()) {
+            log.info("Attempted to retrieve Game record with ID: {}, but none found", id);
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(game.get());
+    }
 }
