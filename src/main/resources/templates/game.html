@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>${game.title}</title>
+</head>
+<body>
+  <div class="navbar">
+    <button type="button">X</button>
+    <span th:text="${game.title}"></span>
+  </div>
+  <div id="teams-container" th:each="team : ${game.teams}">
+    <div class="team" id="team-${team.id}">
+      <p>${team.name}</p>
+      <div th:each="score : ${team.scores}">
+        <p>${score}</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="controls"></div>
+</body>
+</html>
