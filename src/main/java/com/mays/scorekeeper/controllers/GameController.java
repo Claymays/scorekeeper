@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 /**
  * A REST api controller for Game records
@@ -27,7 +28,12 @@ public class GameController {
      * @return response entity containing newly created Game record
      */
     @PostMapping(consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
-    public ResponseEntity<Game> create() {
-        return ResponseEntity.ok(new Game());
+    public ResponseEntity<Game> create(@RequestBody Game newGame) {
+        Optional<Game> createdGame = gameService.create(newGame);
+        if (createdGame.isEmpty()) {
+            log.warn("Attempted to create game: {}, but failed", newGame);
+            return ResponseEntity.internalServerError().build();
+        }
+        return ResponseEntity.ok(createdGame.get());
     }
 }
