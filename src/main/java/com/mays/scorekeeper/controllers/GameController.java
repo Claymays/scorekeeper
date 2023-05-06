@@ -16,7 +16,7 @@ import java.util.Arrays;
  * A REST api controller for Game records
  */
 @RestController
-@RequestMapping("/game")
+@RequestMapping("/api/game")
 @RequiredArgsConstructor
 @Slf4j
 public class GameController {
