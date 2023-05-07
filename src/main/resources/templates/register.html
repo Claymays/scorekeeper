@@ -5,7 +5,7 @@
   <title>Register</title>
 </head>
 <body>
-  <form th:action="@{/api/user/}" method="post">
+  <form th:action="@{/authentication}" method="post" th:object="${user}">
     <input value="" id="login-username" name="username" placeholder="Username">
     <input value="" id="login-password" name="password" placeholder="Password">
     <button type="submit">Register</button>
