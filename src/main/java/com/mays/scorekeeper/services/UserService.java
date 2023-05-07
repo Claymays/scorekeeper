@@ -8,17 +8,34 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 /**
  * A business logic service class for User objects.
  */
-//@Service
+@Service
 @Slf4j
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
+    private final BCryptPasswordEncoder passwordEncoder;
+
+    @Override
+    public UserDetails loadUserByUsername(String username) {
+        User user = userRepository.findOneByUsername(username)
+                .orElseThrow(() ->
+                        new UsernameNotFoundException(
+                                "User with name:" + username + "not found"));
+
+        String password = user.getPassword();
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority("USER"));
+        return new org.springframework.security.core.
+                userdetails.User(username, password, authorities);
+    }
 
     /**
      * Creates a new User record if it does not exist.
@@ -34,7 +51,9 @@ public class UserService implements UserDetailsService {
              return Optional.empty();
         }
         log.info("Creating user with name: " + username);
-        return Optional.of(userRepository.save(new User(username, password)));
+        String encodedPassword = passwordEncoder.encode(password);
+        return Optional.of(userRepository.save(
+                new User(username, encodedPassword)));
     }
 
     /**
@@ -109,19 +128,5 @@ public class UserService implements UserDetailsService {
      */
     public boolean existsByUsername(String username) {
         return userRepository.existsByUsername(username);
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String username) {
-        User user = userRepository.findOneByUsername(username)
-                .orElseThrow(() ->
-                    new UsernameNotFoundException(
-                            "User with name:" + username + "not found"));
-
-        String password = user.getPassword();
-        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority("USER"));
-        return new org.springframework.security.core.
-                userdetails.User(username, password, authorities);
     }
 }

@@ -1,13 +1,13 @@
 package com.mays.scorekeeper.controllers;
 
+import com.mays.scorekeeper.services.UserService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
@@ -17,7 +17,7 @@ import java.security.Principal;
 @RequiredArgsConstructor
 public class PageController {
 
-    private final InMemoryUserDetailsManager manager;
+    private final UserService userService;
 
     @Data
     protected static class UserRequestBody {
@@ -32,14 +32,9 @@ public class PageController {
         return "register";
     }
 
-    @PostMapping("authentication")
-    public String authenticate(UserRequestBody newUser) {
-        UserDetails user = User.withDefaultPasswordEncoder()
-                .username(newUser.getUsername())
-                .password(newUser.getPassword())
-                .roles("USER")
-                .build();
-        manager.createUser(user);
+    @PostMapping("create-user")
+    public String createUser(UserRequestBody newUser) {
+        userService.create(newUser.getUsername(), newUser.getPassword());
         return "redirect:login";
     }
 
