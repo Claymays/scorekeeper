@@ -2,8 +2,7 @@ package com.mays.scorekeeper.services;
 
 import com.mays.scorekeeper.entities.Game;
 import com.mays.scorekeeper.repositories.GameRepository;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,13 +13,11 @@ import java.util.Optional;
  *
  * @author Clayton Mays
  */
-@Data
-@NoArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class GameService {
 
-    @Autowired
-    GameRepository gameRepository;
+    private final GameRepository gameRepository;
 
     /**
      * Create a game record stored in the database, and returned to caller.
