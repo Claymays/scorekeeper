@@ -2,7 +2,6 @@ package com.mays.scorekeeper.services;
 
 import com.mays.scorekeeper.entities.User;
 import com.mays.scorekeeper.repositories.UserRepository;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
