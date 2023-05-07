@@ -1,42 +1,55 @@
 package com.mays.scorekeeper.controllers;
 
-import com.mays.scorekeeper.services.UserService;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 
 @Controller
 @RequestMapping("/")
 @RequiredArgsConstructor
 public class PageController {
 
-    private final UserService userService;
+    private final InMemoryUserDetailsManager manager;
 
-    @GetMapping("home")
-    public String home() {
-        return "home";
+    @Data
+    protected static class UserRequestBody {
+        String username;
+        String password;
     }
 
-    @GetMapping("login")
-    public String login() {
-        return "login";
-    }
 
     @GetMapping("register")
-    public String register() {
+    public String register(Model model) {
+        model.addAttribute("user", new UserRequestBody());
         return "register";
     }
 
-    @GetMapping("newGame")
-    public String newGame(Model model) {
-        return "gameSetup";
+    @PostMapping("authentication")
+    public String authenticate(UserRequestBody newUser) {
+        UserDetails user = User.withDefaultPasswordEncoder()
+                .username(newUser.getUsername())
+                .password(newUser.getPassword())
+                .roles("USER")
+                .build();
+        manager.createUser(user);
+        return "redirect:login";
     }
 
-    @GetMapping("users")
-    public String getAll(Model model) {
-        model.addAttribute("users", userService.getAllUsers());
-        return "users";
+    @GetMapping
+    public String profile(Principal principal) {
+        return "profile";
+    }
+
+    @GetMapping("newGame")
+    public String newGame(Model model, HttpServletRequest request) {
+        return "gameSetup";
     }
 }
