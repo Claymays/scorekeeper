@@ -1,22 +1,18 @@
 package com.mays.scorekeeper.controllers;
 
-import com.mays.scorekeeper.entities.Friend;
-import com.mays.scorekeeper.entities.Game;
-import com.mays.scorekeeper.entities.User;
-import com.mays.scorekeeper.services.GameService;
 import com.mays.scorekeeper.services.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
 
 @Controller
 @RequestMapping("/")
+@RequiredArgsConstructor
 public class PageController {
 
-    @Autowired
-    UserService userService;
+    private final UserService userService;
 
     @GetMapping("home")
     public String home() {
@@ -27,6 +23,12 @@ public class PageController {
     public String login() {
         return "login";
     }
+
+    @GetMapping("register")
+    public String register() {
+        return "register";
+    }
+
     @GetMapping("newGame")
     public String newGame(Model model) {
         return "gameSetup";
