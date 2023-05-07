@@ -3,6 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <title>${game.title}</title>
+  <script>
+    let selectedTeam;
+    function selectTeam(team) {
+      selectedTeam = team;
+    }
+
+    function setScore(increment) {
+      let score = document.getElementById(`team-${selectedTeam}-new-score`);
+      score.value += increment;
+    }
+  </script>
 </head>
 <body>
   <div class="navbar">
@@ -12,13 +23,20 @@
   <div id="teams-container" th:each="team : ${game.teams}">
     <div class="team" id="team-${team.id}">
       <p>${team.name}</p>
-      <div th:each="score : ${team.scores}">
-        <input readonly>${score}</input>
-        <input name="team-${team.name}-new-score">
+      <div>
+        <div th:each="score : ${team.scores}">
+          <input readonly>${score}</input>
+        </div>
+        <input name="team-${team.id}-new-score" id="team-${team.id}-new-score" onfocus="selectTeam(${team.id})">
       </div>
     </div>
   </div>
 
-  <div id="controls"></div>
+  <div id="controls">
+    <button type="button" onclick="setScore()">+1</button>
+    <button type="button" onclick="setScore()">+5</button>
+    <button type="button" onclick="setScore()">-5</button>
+    <button type="button" onclick="setScore()">-1</button>
+  </div>
 </body>
 </html>
