@@ -7,14 +7,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.stereotype.Service;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.*;
 
 /**
  * A business logic service class for User objects.
  */
-@Service
+//@Service
 @Slf4j
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
@@ -113,13 +113,12 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) {
-        Optional<User> user = userRepository.findOneByUsername(username);
+        User user = userRepository.findOneByUsername(username)
+                .orElseThrow(() ->
+                    new UsernameNotFoundException(
+                            "User with name:" + username + "not found"));
 
-        if (user.isEmpty()) {
-            log.warn("User with name:" + username + "not found");
-        }
-
-        String password = user.get().getPassword();
+        String password = user.getPassword();
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("USER"));
         return new org.springframework.security.core.
