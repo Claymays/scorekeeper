@@ -3,57 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>New Game</title>
-  <script th:inline="javascript">
-      let teamCounter = 1;
-      let playerCount = 1;
-      function addTeam() {
-        teamCounter++;
-        let teamName = `team-${teamCounter}`;
-        let form = document.getElementById('new-game-form');
-        let input = document.getElementById("team-1-new-player").cloneNode();
-        let clone = document.getElementById("team-1-player-select").cloneNode(true);
-        let container = document.createElement("div");
-        let button = document.createElement("button");
-
-        input.setAttribute("id", `${teamName}-new-player`);
-        input.setAttribute("name", 'players');
-
-        button.setAttribute("onclick", `selectPlayer('${teamName}-new-player', '${teamName}')`);
-        button.innerHTML = "+";
-
-        clone.setAttribute("id", `${teamName}-player-select`);
-        clone.setAttribute("name", `${teamName}`);
-        clone.setAttribute("onchange", `selectPlayer('${teamName}-player-select', '${teamName}')`);
-
-        container.setAttribute("id", `${teamName}-container`);
-
-        container.appendChild(input);
-        container.appendChild(button);
-        container.appendChild(clone);
-        form.insertBefore(container, form.lastElementChild);
-      }
-      
-      function deleteOption(selected) {
-          for (let i = 1; i <= teamCounter; i++) {
-              let select = document.getElementById(`team-${i}-player-select`);
-              select.querySelectorAll("option").forEach(option => {
-                  if (option.value === selected) {
-                      option.remove();
-                  }
-              })
-          }
-      }
-
-      function selectPlayer(inputType, teamName) {
-          let input = document.getElementById(inputType);
-
-          document.getElementById(`${teamName}-container`).innerHTML += `
-                <input value="${input.value}" name="players" type="text" readonly="readonly" />`
-          playerCount++;
-
-          deleteOption(input.value);
-      }
-  </script>
+  <link rel="stylesheet" type="text/css" href="../static/css/index.css">
 </head>
 <body>
 <h1>
@@ -61,23 +11,20 @@
   <strong>New Game</strong>
 </h1>
 
-<form id="new-game-form" th:method="POST" th:action="@{/game}" th:object="${game}">
-  <input th:value="game title" name="*">
-  <div id="team-1-container">
-    <h3>Team 1</h3>
-    <label for="team-1-new-player">
-      <input type="text" name="players" id="team-1-new-player" placeholder="New Player"/>
-      <button type="button" onclick="selectPlayer('team-1-new-player', 'team-1')">+</button>
-    </label>
-    <label for="team-1-player-select"></label>
-    <select name="team-1" id="team-1-player-select" class="select" onchange="selectPlayer('team-1-player-select', 'team-1')">
-      <option value="" disabled th:selected="true"></option>
-      <option th:value="${user.username}" th:text="${user.username}" />
-      <option th:each="friend : ${user.getFriendList()}" th:text="${friend.name}" th:value="${friend.name}"/>
-    </select>
+<form id="new-game-form" th:method="POST" th:action="@{/submit-game}" th:object="${game}">
+  <input type="hidden" id="owner" th:field="*{owner}" th:value="*{owner}">
+  <input type="text" th:field="*{name}">
+  <div th:each="team, teamStats : *{teams}">
+    <input type="hidden" th:field="*{teams[__${teamStats.index}__].game}" th:value="${game}">
+    <div>
+      <h3 th:text="'Team ' + ${teamStats.index}" />
+    </div>
   </div>
-  <button type="button" onclick="addTeam()">Add Team</button>
+
+  <button type="submit" name="addTeam">Add Team</button>
+
   <br>
+
   <button type="submit">Start!</button>
 </form>
 </body>
