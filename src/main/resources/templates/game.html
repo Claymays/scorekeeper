@@ -2,41 +2,35 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>${game.title}</title>
-  <script>
-    let selectedTeam;
-    function selectTeam(team) {
-      selectedTeam = team;
-    }
-
-    function setScore(increment) {
-      let score = document.getElementById(`team-${selectedTeam}-new-score`);
-      score.value += increment;
-    }
-  </script>
+  <title th:text="${game.name}"></title>
 </head>
 <body>
-  <div class="navbar">
-    <button type="button">X</button>
-    <span th:text="${game.title}"></span>
-  </div>
-  <div id="teams-container" th:each="team : ${game.teams}">
-    <div class="team" id="team-${team.id}">
-      <p>${team.name}</p>
-      <div>
+  <form action="#" th:action="@{/update-game}" th:method="post" th:object="${game}">
+    <input type="hidden" th:field="*{owner}">
+    <input type="hidden" th:field="*{id}">
+    <input type="hidden" th:field="*{name}">
+    <div class="navbar">
+      <a href="/">X</a>
+      <span th:text="*{name}"></span>
+    </div>
+    <div class="team-container" th:each="team, teamStats : *{teams}">
+      <div class="team">
+      <input type="hidden" th:field="*{teams[__${teamStats.index}__].id}" th:value="${team.id}">
+        <p th:value="${team.name}"></p>
+        <input type="hidden" th:field="*{teams[__${teamStats.index}__].scores}" />
         <div th:each="score : ${team.scores}">
-          <input readonly>${score}</input>
+          <span th:text="${score}" />
         </div>
-        <input name="team-${team.id}-new-score" id="team-${team.id}-new-score" onfocus="selectTeam(${team.id})">
+        <div th:if="${team.scores != null}">
+          <span th:text="'total score:' + ${team.getTotalScore()}"></span>
+        </div>
+        <input th:field="*{teams[__${teamStats.index}__].newScore}" th:value="'0'" />
       </div>
     </div>
-  </div>
 
-  <div id="controls">
-    <button type="button" onclick="setScore()">+1</button>
-    <button type="button" onclick="setScore()">+5</button>
-    <button type="button" onclick="setScore()">-5</button>
-    <button type="button" onclick="setScore()">-1</button>
-  </div>
+    <div id="controls">
+      <button type="submit" name="updateScores">Submit Scores</button>
+    </div>
+  </form>
 </body>
 </html>
