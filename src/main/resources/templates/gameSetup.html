@@ -7,15 +7,10 @@
   <title>New Game</title>
 </head>
 <body>
-<h1>
-  <a th:href="@{/}">X</a>
-  <strong>New Game</strong>
-</h1>
-
-<div class="container mt-5">
+<div class="container mt-5 card">
   <div class="row d-flex justify-content-center">
     <div class="col-md-6">
-      <form id="new-game-form" th:method="POST" th:action="@{/game/new/submit}" th:object="${game}">
+      <form id="new-game-form" class="card-body" th:method="POST" th:action="@{/game/new/submit}" th:object="${game}">
         <input type="hidden" id="owner" th:field="*{owner}" th:value="*{owner}">
         <input class="form-control" type="text" th:field="*{name}">
         <div th:each="team, teamStats : *{teams}">
