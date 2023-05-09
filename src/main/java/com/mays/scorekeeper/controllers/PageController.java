@@ -57,7 +57,7 @@ public class PageController {
      * @param newUser the user to create a record for
      * @return a redirect to the login page
      */
-    @PostMapping("create-user")
+    @PostMapping("user/new")
     public String createUser(UserRequestBody newUser) {
         userService.create(newUser.getUsername(), newUser.getPassword());
         return "redirect:login";
@@ -81,7 +81,7 @@ public class PageController {
      * @param model The model containing attributes of the view
      * @return
      */
-    @GetMapping("new-game")
+    @GetMapping("game/new")
     public String newGame(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.isAuthenticated()) {
@@ -94,7 +94,7 @@ public class PageController {
                     return "redirect:error";
                 }
                 Game game = new Game(user.get());
-                game.getTeams().add(new Team(game));
+                game.getTeams().add(new Team(game, game.getTeams().size()));
                 model.addAttribute("game", game);
                 model.addAttribute(user.get());
             }
@@ -108,7 +108,7 @@ public class PageController {
      * @param game
      * @return
      */
-    @PostMapping("submit-game")
+    @PostMapping("game/new/submit")
     public String submitGame(Model model, Game game) {
         Optional<Game> savedGame = gameService.create(game);
         if (savedGame.isEmpty()) {
@@ -118,13 +118,13 @@ public class PageController {
         return "game";
     }
 
-    @RequestMapping(value="/submit-game", params={"addTeam"})
+    @RequestMapping(value="/game/new/submit", params={"addTeam"})
     public String addTeam(final Game game, final BindingResult bindingResult) {
-        game.getTeams().add(new Team(game));
+        game.getTeams().add(new Team(game, game.getTeams().size()));
         return "gameSetup";
     }
 
-    @RequestMapping(value ="/update-game", params={"updateScores"})
+    @RequestMapping(value ="/game/update", params={"updateScores"})
     public String updateScores(final Game game, final BindingResult bindingResult) {
         for (Team team : game.getTeams()) {
             team.getScores().add(team.getNewScore());
