@@ -28,13 +28,16 @@ public class Team {
     @ElementCollection
     private List<Integer> scores;
 
-    private int newScore;
-
-    private int totalScore;
-
     @ManyToOne
     private Game game;
 
+    @Transient
+    private int newScore;
+
+    @Transient
+    private int totalScore;
+
+    @Transient
     private String teamColor;
 
     public enum BootstrapTableColor {
