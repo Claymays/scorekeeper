@@ -22,12 +22,6 @@ public class Game {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     private int id;
 
-    @Column(name = "name")
-    private String name;
-
-    @Column(name = "note")
-    private String note;
-
     @ManyToOne
     private User owner;
 
@@ -42,7 +36,5 @@ public class Game {
     public Game(User owner) {
         this.teams = new ArrayList<>();
         this.owner = owner;
-        this.name = "";
-        this.note = "";
     }
 }

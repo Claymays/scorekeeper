@@ -12,7 +12,6 @@
     <div class="col-md-6">
       <form id="new-game-form" class="card-body" th:method="POST" th:action="@{/game/new/submit}" th:object="${game}">
         <input type="hidden" id="owner" th:field="*{owner}" th:value="*{owner}">
-        <input class="form-control" type="text" th:field="*{name}">
         <div th:each="team, teamStats : *{teams}">
           <input type="hidden" th:field="*{teams[__${teamStats.index}__].game}" th:value="${game}">
           <input type="hidden" th:field="*{teams[__${teamStats.index}__].teamColor}" th:value="${team.teamColor}">

@@ -4,16 +4,14 @@
   <meta charset="UTF-8">
   <link href="/webjars/bootstrap/4.1.3/css/bootstrap.min.css"
         rel="stylesheet" type="text/css">
-  <title th:text="${game.name}"></title>
+  <title>New Game</title>
 </head>
 <body>
   <form action="#" class="container mt-5 card" th:action="@{/game/update}" th:method="post" th:object="${game}">
     <input type="hidden" th:field="*{owner}">
     <input type="hidden" th:field="*{id}">
-    <input type="hidden" th:field="*{name}">
     <div class="navbar">
       <a class="btn btn-warning" href="/game/new">Restart</a>
-      <span th:text="*{name}"></span>
     </div>
     <th:block th:include="fragments/team"></th:block>
     <br>
