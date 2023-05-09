@@ -60,7 +60,7 @@ public class PageController {
     @PostMapping("user/new")
     public String createUser(UserRequestBody newUser) {
         userService.create(newUser.getUsername(), newUser.getPassword());
-        return "redirect:login";
+        return "redirect:/login";
     }
 
     /**
@@ -91,7 +91,7 @@ public class PageController {
                 String username = userDetails.getUsername();
                 Optional<User> user = userService.getByUsername(username);
                 if (user.isEmpty()) {
-                    return "redirect:error";
+                    return "redirect:/error";
                 }
                 Game game = new Game(user.get());
                 game.getTeams().add(new Team(game, game.getTeams().size()));
@@ -104,17 +104,16 @@ public class PageController {
 
     /**
      *
-     * @param model The model containing attributes of the view
-     * @param game
-     * @return
+     * @param game form submitted game object
+     * @return game view
      */
     @PostMapping("game/new/submit")
-    public String submitGame(Model model, Game game) {
-        Optional<Game> savedGame = gameService.create(game);
-        if (savedGame.isEmpty()) {
-            return "redirect:error";
-        }
-        model.addAttribute(game);
+    public String submitGame(Game game) {
+        User user = game.getOwner();
+        gameService.create(game).get();
+        user.getGames().add(game);
+        userService.update(user);
+
         return "game";
     }
 
@@ -130,7 +129,6 @@ public class PageController {
             team.getScores().add(team.getNewScore());
             team.setNewScore(0);
         }
-        gameService.update(game);
         return "game";
     }
 }
