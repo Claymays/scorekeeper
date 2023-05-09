@@ -14,6 +14,7 @@
           <tr th:each="score : ${team.scores}">
             <td class="text-right" th:text="${score}"></td>
           </tr>
+          <td class="text-right" th:text="'Total: ' + ${team.totalScore}"></td>
         </tbody>
       </table>
     <div class="form-group">
