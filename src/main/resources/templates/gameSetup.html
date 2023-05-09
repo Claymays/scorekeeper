@@ -2,8 +2,9 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
+  <link href="/webjars/bootstrap/4.1.3/css/bootstrap.min.css"
+        rel="stylesheet" type="text/css">
   <title>New Game</title>
-  <link rel="stylesheet" type="text/css" href="../static/css/index.css">
 </head>
 <body>
 <h1>
@@ -11,22 +12,29 @@
   <strong>New Game</strong>
 </h1>
 
-<form id="new-game-form" th:method="POST" th:action="@{/submit-game}" th:object="${game}">
-  <input type="hidden" id="owner" th:field="*{owner}" th:value="*{owner}">
-  <input type="text" th:field="*{name}">
-  <div th:each="team, teamStats : *{teams}">
-    <input type="hidden" th:field="*{teams[__${teamStats.index}__].game}" th:value="${game}">
-    <input type="hidden" th:field="*{teams[__${teamStats.index}__].teamColor}" th:value="${team.teamColor}">
-    <div>
-      <input th:field="*{teams[__${teamStats.index}__].name}" th:placeholder="'Team ' + ${teamStats.index + 1}"/>
+<div class="container mt-5">
+  <div class="row d-flex justify-content-center">
+    <div class="col-md-6">
+      <form id="new-game-form" th:method="POST" th:action="@{/game/new/submit}" th:object="${game}">
+        <input type="hidden" id="owner" th:field="*{owner}" th:value="*{owner}">
+        <input class="form-control" type="text" th:field="*{name}">
+        <div th:each="team, teamStats : *{teams}">
+          <input type="hidden" th:field="*{teams[__${teamStats.index}__].game}" th:value="${game}">
+          <input type="hidden" th:field="*{teams[__${teamStats.index}__].teamColor}" th:value="${team.teamColor}">
+          <div>
+            <input class="form-control" th:field="*{teams[__${teamStats.index}__].name}" th:placeholder="'Team ' + ${teamStats.index + 1}"/>
+          </div>
+        </div>
+
+        <button class="btn btn-md btn-info btn-block" type="submit" name="addTeam" th:value="*{teams.size()}">Add Team</button>
+
+        <br>
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Start!</button>
+      </form>
     </div>
   </div>
+</div>
 
-  <button type="submit" name="addTeam" th:value="*{teams.size()}">Add Team</button>
-
-  <br>
-
-  <button type="submit">Start!</button>
-</form>
 </body>
 </html>
