@@ -7,12 +7,12 @@
   <title th:text="${game.name}"></title>
 </head>
 <body>
-  <form action="#" class="container" th:action="@{/game/update}" th:method="post" th:object="${game}">
+  <form action="#" class="container mt-5 card" th:action="@{/game/update}" th:method="post" th:object="${game}">
     <input type="hidden" th:field="*{owner}">
     <input type="hidden" th:field="*{id}">
     <input type="hidden" th:field="*{name}">
     <div class="navbar">
-      <a href="/">X</a>
+      <a class="btn btn-warning" href="/game/new">Restart</a>
       <span th:text="*{name}"></span>
     </div>
     <th:block th:include="fragments/team"></th:block>
