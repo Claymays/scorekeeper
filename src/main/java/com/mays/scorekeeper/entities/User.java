@@ -26,14 +26,7 @@ public class User {
     private String username;
     @JsonIgnore
     private String password;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name="user_friend",
-            joinColumns = @JoinColumn(name = "friend_id",
-                    referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id",
-                    referencedColumnName = "id"))
-    private List<Friend> friendList;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(name="user_game",
             joinColumns = @JoinColumn(name = "game_id",
                     referencedColumnName = "id"),
@@ -48,7 +41,6 @@ public class User {
         this.username = username;
         this.password = password;
         this.games = new ArrayList<>();
-        this.friendList = new ArrayList<>();
     }
 }
 
