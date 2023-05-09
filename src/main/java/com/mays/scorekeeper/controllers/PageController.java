@@ -72,10 +72,6 @@ public class PageController {
         return "landing";
     }
 
-    @GetMapping("profile")
-    public String profile() {
-        return "profile";
-    }
     /**
      *
      * @param model The model containing attributes of the view
@@ -128,6 +124,7 @@ public class PageController {
         for (Team team : game.getTeams()) {
             team.getScores().add(team.getNewScore());
             team.setNewScore(0);
+            team.calculateTotalScore();
         }
         return "game";
     }
