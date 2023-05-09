@@ -1,6 +1,5 @@
 package com.mays.scorekeeper.security;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -16,7 +15,6 @@ import org.springframework.security.web.SecurityFilterChain;
  */
 @Configuration
 @EnableWebSecurity
-@RequiredArgsConstructor
 public class SecurityConfiguration  {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http)
@@ -24,12 +22,12 @@ public class SecurityConfiguration  {
         return http
                 .authorizeHttpRequests(auth -> {
                     auth
-                        .antMatchers("/register", "/create-user", "/", "/static/**").permitAll()
+                        .antMatchers("/register", "/user/new", "/").permitAll()
                         .anyRequest().authenticated();
                 })
                 .httpBasic(Customizer.withDefaults())
                 .formLogin(formLogin -> formLogin
-                        .defaultSuccessUrl("/profile")
+                        .defaultSuccessUrl("/game/new")
                         .permitAll())
                 .build();
     }
