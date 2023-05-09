@@ -64,12 +64,13 @@ public class Team {
 
     public Team(Game game, int teamNumber) {
         this.scores = new ArrayList<>();
-        this.name = "";
+        this.name = "Team " + (teamNumber + 1);
         this.game = game;
+        this.totalScore = 0;
         assignTeamColor(teamNumber);
     }
 
-    public void getTotalScore() {
+    public void calculateTotalScore() {
         for (Integer score : scores) {
             totalScore += score;
         }
