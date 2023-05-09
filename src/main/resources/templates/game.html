@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<link href="webjars/bootstrap/4.1.3/css/bootstrap.min.css"
+      rel="stylesheet">
 <head>
   <meta charset="UTF-8">
   <title th:text="${game.name}"></title>
 </head>
 <body>
-  <form action="#" th:action="@{/update-game}" th:method="post" th:object="${game}">
+  <form action="#" class="container" th:action="@{/update-game}" th:method="post" th:object="${game}">
     <input type="hidden" th:field="*{owner}">
     <input type="hidden" th:field="*{id}">
     <input type="hidden" th:field="*{name}">
@@ -13,23 +15,10 @@
       <a href="/">X</a>
       <span th:text="*{name}"></span>
     </div>
-    <div class="team-container" th:each="team, teamStats : *{teams}">
-      <div class="team">
-      <input type="hidden" th:field="*{teams[__${teamStats.index}__].id}" th:value="${team.id}">
-        <p th:value="${team.name}"></p>
-        <input type="hidden" th:field="*{teams[__${teamStats.index}__].scores}" />
-        <div th:each="score : ${team.scores}">
-          <span th:text="${score}" />
-        </div>
-        <div th:if="${team.scores != null}">
-          <span th:text="'total score:' + ${team.getTotalScore()}"></span>
-        </div>
-        <input th:field="*{teams[__${teamStats.index}__].newScore}" th:value="'0'" />
-      </div>
-    </div>
-
+    <th:block th:include="fragments/team"></th:block>
+    <br>
     <div id="controls">
-      <button type="submit" name="updateScores">Submit Scores</button>
+      <button class="btn btn-block btn-primary" type="submit" name="updateScores">Submit Scores</button>
     </div>
   </form>
 </body>
