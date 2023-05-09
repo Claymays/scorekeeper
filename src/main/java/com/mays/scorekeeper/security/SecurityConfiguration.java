@@ -24,11 +24,13 @@ public class SecurityConfiguration  {
         return http
                 .authorizeHttpRequests(auth -> {
                     auth
-                        .antMatchers("/register", "/create-user").permitAll()
+                        .antMatchers("/register", "/create-user", "/", "/static/**").permitAll()
                         .anyRequest().authenticated();
                 })
                 .httpBasic(Customizer.withDefaults())
-                .formLogin(Customizer.withDefaults())
+                .formLogin(formLogin -> formLogin
+                        .defaultSuccessUrl("/profile")
+                        .permitAll())
                 .build();
     }
 
