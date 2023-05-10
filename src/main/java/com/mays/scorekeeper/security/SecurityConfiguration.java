@@ -16,6 +16,14 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration  {
+
+    /**
+     * Web filter chain bean. Configures unauthorized resources,
+     *  login, and logout pages
+     * @param http incoming request
+     * @return a filter chain to process authentication
+     * @throws Exception on configuration error
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http)
             throws Exception {
@@ -42,6 +50,10 @@ public class SecurityConfiguration  {
 
     }
 
+    /**
+     * Encryption bean for encoding passwords. Used primarily by userService
+     * @return password encoder bean
+     */
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
