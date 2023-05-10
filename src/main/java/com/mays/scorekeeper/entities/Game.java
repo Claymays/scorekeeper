@@ -36,6 +36,11 @@ public class Game {
                     referencedColumnName = "id"))
     private List<Team> teams;
 
+    /**
+     * Partially qualified class constructor.
+     *  Instantiates properties with blank values for form handling
+     * @param owner User object that created the game
+     */
     public Game(User owner) {
         this.teams = new ArrayList<>();
         this.teams.add(new Team(this, 0));
