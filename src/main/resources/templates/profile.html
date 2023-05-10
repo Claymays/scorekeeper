@@ -16,7 +16,7 @@
     <div th:each="game : ${user.games}">
       <div class="card-body">
         <a class="btn btn-secondary" th:href="'/game/' + ${game.id}" th:text="${game.name}"></a>
-        <a class="btn btn-danger" th:href="'/game/delete' + ${game.id}">Delete</a>
+        <a class="btn btn-danger" th:href="'/game/delete/' + ${game.id}">Delete</a>
       </div>
     </div>
   </div>
