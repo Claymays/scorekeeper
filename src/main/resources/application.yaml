@@ -2,18 +2,16 @@ spring:
   profiles:
     include: secrets
   datasource:
-#    url: "jdbc:mysql://localhost:3306/scorekeeper"
-#    username: "root"
-    url: "jdbc:mysql://awseb-e-pin3qirkwd-stack-awsebrdsdatabase-gbtif8ye7p3n.cufudecqblgj.us-east-2.rds.amazonaws.com:3306/scorekeeper"
-    username: "Clayton"
-    password: "Cc854285"
+    url: "jdbc:mysql://localhost:3306/scorekeeper"
+    username: ${secrets.database.username}
+    password: ${secrets.database.password}
     driver-class-name: com.mysql.cj.jdbc.Driver
   flyway:
-    enabled: true
+    enabled: false
   jpa:
     hibernate:
-      ddl-auto: create-drop
-    defer-datasource-initialization: true
+      ddl-auto: create
+    defer-datasource-initialization: false
 
 application:
   random:
