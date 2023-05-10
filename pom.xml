@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.mays</groupId>
     <artifactId>scorekeeper</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.5.0-SNAPSHOT</version>
     <packaging>war</packaging>
     <name>scorekeeper</name>
     <description>scorekeeper</description>
