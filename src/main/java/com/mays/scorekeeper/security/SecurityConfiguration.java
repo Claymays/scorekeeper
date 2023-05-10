@@ -22,14 +22,24 @@ public class SecurityConfiguration  {
         return http
                 .authorizeHttpRequests(auth -> {
                     auth
-                        .antMatchers("/register", "/user/new", "/").permitAll()
+                        .antMatchers("/register", "/").permitAll()
                         .anyRequest().authenticated();
                 })
                 .httpBasic(Customizer.withDefaults())
                 .formLogin(formLogin -> formLogin
-                        .defaultSuccessUrl("/game/new")
+                        .defaultSuccessUrl("/profile")
                         .permitAll())
+                .logout(logout -> {
+                    logout
+                    .logoutUrl("/logout") // The URL that triggers the logout process
+                            .logoutSuccessUrl("/") // The URL to redirect after successful logout
+                            .invalidateHttpSession(true) // Invalidate the HttpSession
+                            .deleteCookies("JSESSIONID") // Delete the JSESSIONID cookie
+                            .permitAll();
+                })
                 .build();
+
+
     }
 
     @Bean
