@@ -55,7 +55,7 @@ public class PageController {
     /**
      * Access point for registration view
      * @param model The model containing attributes of the view
-     * @return
+     * @return registration view
      */
     @GetMapping("register")
     public String register(Model model) {
@@ -93,7 +93,7 @@ public class PageController {
      * Creates a new Game object and attaches it to the view,
      * then returns a view for game configuration
      * @param model The model containing attributes of the view
-     * @return
+     * @return game setup view with a blank Game object
      */
     @GetMapping("game/new")
     public String newGame(Model model) {
