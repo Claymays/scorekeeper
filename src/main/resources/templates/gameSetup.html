@@ -2,8 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <link href="/webjars/bootstrap/4.1.3/css/bootstrap.min.css"
-        rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <title>New Game</title>
 </head>
 <body>
@@ -12,19 +11,23 @@
     <div class="col-md-6">
       <form id="new-game-form" class="card-body" th:method="POST" th:action="@{/game/new/submit}" th:object="${game}">
         <input type="hidden" id="owner" th:field="*{owner}" th:value="*{owner}">
+        <label for="game-name">Game Name:</label>
+        <input id="game-name" class="form-control" type="text" th:field="*{name}">
+        <br>
         <div th:each="team, teamStats : *{teams}">
           <input type="hidden" th:field="*{teams[__${teamStats.index}__].game}" th:value="${game}">
           <input type="hidden" th:field="*{teams[__${teamStats.index}__].teamColor}" th:value="${team.teamColor}">
           <div>
-            <input class="form-control" th:field="*{teams[__${teamStats.index}__].name}" th:placeholder="'Team ' + ${teamStats.index + 1}"/>
+            <label th:text="${team.name} + ':'" th:for="'team-' + ${team.name}"></label>
+            <input th:id="'team-' + ${team.name}" class="form-control" th:field="*{teams[__${teamStats.index}__].name}" th:placeholder="'Team ' + ${teamStats.index + 1}"/>
           </div>
         </div>
 
-        <button class="btn btn-md btn-info btn-block" type="submit" name="addTeam" th:value="*{teams.size()}">Add Team</button>
-
         <br>
-
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Start!</button>
+        <div>
+          <button class="btn btn-md btn-info btn-block" type="submit" name="addTeam" th:value="*{teams.size()}">Add Team</button>
+          <button class="btn btn-lg btn-primary btn-block" type="submit">Start!</button>
+        </div>
       </form>
     </div>
   </div>
