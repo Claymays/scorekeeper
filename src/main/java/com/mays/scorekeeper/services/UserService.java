@@ -132,6 +132,10 @@ public class UserService implements UserDetailsService {
         return userRepository.existsByUsername(username);
     }
 
+    /**
+     * Method for accessing current user from session
+     * @return authenticated session user
+     */
     public Optional<User> getUserFromContext() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Object principal = authentication.getPrincipal();
