@@ -37,7 +37,6 @@ public class Team {
     @Transient
     private int totalScore;
 
-    @Transient
     private String teamColor;
 
     public enum BootstrapTableColor {
