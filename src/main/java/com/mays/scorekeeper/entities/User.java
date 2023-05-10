@@ -26,12 +26,7 @@ public class User {
     private String username;
     @JsonIgnore
     private String password;
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinTable(name="user_game",
-            joinColumns = @JoinColumn(name = "game_id",
-                    referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id",
-                    referencedColumnName = "id"))
+    @OneToMany(mappedBy = "owner" , cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Game> games;
 
     /**
