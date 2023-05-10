@@ -28,7 +28,12 @@ public class Game {
     @ManyToOne
     private User owner;
 
-    @OneToMany(mappedBy = "game", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(name="game_team",
+            joinColumns = @JoinColumn(name = "game_id",
+                    referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "team_id",
+                    referencedColumnName = "id"))
     private List<Team> teams;
 
     /**
