@@ -39,6 +39,9 @@ public class Team {
 
     private String teamColor;
 
+    /**
+     * Enumerated fields for team colors
+     */
     public enum BootstrapTableColor {
         PRIMARY("table-primary"),
         SECONDARY("table-secondary"),
@@ -61,6 +64,12 @@ public class Team {
     }
 
 
+    /**
+     * Partially qualified class constructor.
+     *  Instantiates properties with blank values for form handling
+     * @param game Game object to attach team to
+     * @param teamNumber number of team currently being created
+     */
     public Team(Game game, int teamNumber) {
         this.scores = new ArrayList<>();
         this.name = "Team " + (teamNumber + 1);
@@ -69,12 +78,19 @@ public class Team {
         assignTeamColor(teamNumber);
     }
 
+    /**
+     * Method for determining a teams total score
+     */
     public void calculateTotalScore() {
         for (Integer score : scores) {
             totalScore += score;
         }
     }
 
+    /**
+     * Method for associating a color with a team
+     * @param teamNumber number of the team currently being constructed
+     */
     public void assignTeamColor(int teamNumber) {
         switch (teamNumber) {
             case 0:
