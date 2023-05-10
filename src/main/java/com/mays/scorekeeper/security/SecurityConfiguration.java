@@ -39,10 +39,10 @@ public class SecurityConfiguration  {
                         .permitAll())
                 .logout(logout -> {
                     logout
-                    .logoutUrl("/logout") // The URL that triggers the logout process
-                            .logoutSuccessUrl("/") // The URL to redirect after successful logout
-                            .invalidateHttpSession(true) // Invalidate the HttpSession
-                            .deleteCookies("JSESSIONID") // Delete the JSESSIONID cookie
+                    .logoutUrl("/logout")
+                            .logoutSuccessUrl("/")
+                            .invalidateHttpSession(true)
+                            .deleteCookies("JSESSIONID")
                             .permitAll();
                 })
                 .build();
