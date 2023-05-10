@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <title th:text="${user.username} + '\'s Profile'"></title>
+</head>
+<body>
+  <div class="navbar justify-content-start">
+    <a class="btn btn-link" href="/logout">Log Out</a>
+    <a class="btn btn-link" href="/game/new">New Game</a>
+  </div>
+<div class="card-deck md-3 text-center">
+  <div class="card mb-4 box-shadow">
+    <div th:each="game : ${user.games}">
+      <div class="card-body">
+        <a class="btn btn-secondary" th:href="'/game/' + ${game.id}" th:text="${game.name}"></a>
+        <a class="btn btn-danger" th:href="'/game/delete' + ${game.id}">Delete</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
