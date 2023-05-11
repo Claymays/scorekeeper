@@ -52,7 +52,7 @@ public class UserService implements UserDetailsService {
                      + username + " but name already exists");
              return Optional.empty();
         }
-        log.info("Creating user with name: " + username);
+        log.info("Creating user with name: {}", username);
         String encodedPassword = passwordEncoder.encode(password);
         return Optional.of(userRepository.save(
                 new User(username, encodedPassword)));
@@ -70,7 +70,7 @@ public class UserService implements UserDetailsService {
             log.warn("Attempted to retrieve user record with ID: " +
                     id + " but no record found");
         } else {
-            log.info("Retrieved user record " + user.get().getUsername());
+            log.info("Retrieved user record {}", user.get().getUsername());
         }
         return user;
     }
@@ -86,7 +86,7 @@ public class UserService implements UserDetailsService {
             log.warn("Attempted to retrieve user record with username: "
                     + username + " but no record found");
         } else {
-            log.info("Retrieved user record " + username);
+            log.info("Retrieved user record {}", username);
         }
         return user;
     }
@@ -97,7 +97,7 @@ public class UserService implements UserDetailsService {
      * @param id the id of the user to be deleted.
      */
     public void delete(Integer id) {
-        log.info("Deleting User record with id: " + id);
+        log.info("Deleting User record with id: {}", id);
         userRepository.deleteById(id);
     }
 
@@ -107,7 +107,7 @@ public class UserService implements UserDetailsService {
      * @param user a new User record to replace the old one
      */
     public void update(User user) {
-        log.info("Updating user record " + user.getUsername());
+        log.info("Updating user record {}", user.getUsername());
         userRepository.save(user);
     }
 
@@ -118,7 +118,7 @@ public class UserService implements UserDetailsService {
     public List<User> getAllUsers() {
         List<User> users = (List<User>) userRepository.findAll();
         for (User user : users) {
-            log.info("Retrieved user record: " + user.getUsername());
+            log.info("Retrieved user record: {}", user.getUsername());
         }
         return users;
     }
